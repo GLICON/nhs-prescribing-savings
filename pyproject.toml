@@ -1,0 +1,56 @@
+# This file tells Python about my project:
+# its name, which libraries it needs, and settings for my tools.
+
+# How to install my project (setuptools is the installer)
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+# Basic info about my project
+[project]
+name = "nhs_rx"                  # the name I use in code: import nhs_rx
+version = "0.1.0"                # first version
+description = "NHS prescribing variation and generic-switch savings engine"
+readme = "README.md"
+requires-python = ">=3.10"       # needs Python 3.10 or newer
+# Libraries my project always needs
+dependencies = ["requests>=2.31", "pyyaml>=6.0", "pandas>=2.0", "statsmodels>=0.14", "scipy>=1.11"]
+
+# Extra libraries, split into groups so I only install what I need
+[project.optional-dependencies]
+spark = ["pyspark==3.5.3", "delta-spark==3.2.1"]          # to run Spark on my laptop
+orchestration = ["dagster>=1.8", "dagster-webserver>=1.8", "databricks-sdk>=0.30", "python-dotenv>=1.0"]  # Dagster + Databricks
+reports = ["openpyxl>=3.1"]                                # to make the Excel file
+dev = ["pytest>=8", "ruff>=0.6", "pre-commit>=3.7", "build>=1.2"]  # testing and checking my code
+
+# Commands that Databricks runs, one for each step of the pipeline
+[project.scripts]
+nhs-rx-bronze = "nhs_rx.jobs:run_bronze"
+nhs-rx-silver = "nhs_rx.jobs:run_silver"
+nhs-rx-gold = "nhs_rx.jobs:run_gold"
+nhs-rx-stats = "nhs_rx.jobs:run_stats"
+
+# My code is inside the src folder
+[tool.setuptools.packages.find]
+where = ["src"]
+
+# Also include my CSV file when the project is installed
+[tool.setuptools.package-data]
+nhs_rx = ["reference/*.csv"]
+
+# Tells Dagster where to find my pipeline
+[tool.dagster]
+module_name = "dagster_pipeline.definitions"
+
+# Settings for ruff (checks my code for mistakes)
+[tool.ruff]
+line-length = 100                     # max 100 characters per line
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]   # the types of mistakes to look for
+ignore = ["E501"]                     # don't complain about long lines
+
+# Settings for pytest (runs my tests)
+[tool.pytest.ini_options]
+testpaths = ["tests"]                 # my tests are in the tests folder
+markers = ["spark: tests that start a local Spark session (slower)"]

@@ -1,0 +1,22 @@
+# These checks run automatically every time I type `git commit`.
+# If a check fails, the commit stops so I can fix the problem first.
+# Setup (once): pre-commit install
+repos:
+  # ruff: finds mistakes in my Python code and fixes the formatting
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.6.9
+    hooks:
+      - id: ruff
+        args: [--fix] # fix what it can automatically
+      - id: ruff-format
+
+  # General checks for all files
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: check-yaml # are my .yaml files written correctly?
+      - id: end-of-file-fixer # every file ends with an empty line
+      - id: trailing-whitespace # remove spaces at the end of lines
+      - id: check-added-large-files # stop me committing a huge data file by mistake
+        args: ["--maxkb=5000"]
+      - id: detect-private-key # stop me committing a password or key

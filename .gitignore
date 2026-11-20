@@ -1,0 +1,42 @@
+# Files and folders Git should NEVER upload to GitHub
+
+# My secrets (passwords and tokens) - never share these
+.env
+
+# My virtual environment - anyone can recreate it with pip install
+nhs_pse/
+.venv/
+
+# Files Python creates by itself
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+
+# Data files - the NHS files are huge (6 GB), so I download them instead of storing them
+data/landing/
+data/lakehouse/
+data/exports/
+data/sample/
+*.zip
+spark-warehouse/
+metastore_db/
+derby.log
+
+# Dagster's local run history
+.dagster_home/
+tmp*/
+
+# Databricks deploy files
+.databricks/
+
+# Reports the pipeline makes (they can always be re-made)
+reports/output/
+
+# Mac and editor files
+.DS_Store
+.idea/
+.vscode/
