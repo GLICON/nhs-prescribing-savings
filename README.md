@@ -97,3 +97,13 @@ pytest
 * NHS England – Patients Registered at a GP Practice
 * MHCLG – English Indices of Deprivation 2025
 * Bennett Institute – OpenPrescribing API (benchmark)
+
+## Engineering log
+
+A running record of problems found while building this project and how I handled them.
+Newest first.
+
+| Date | What happened | What I did | Status |
+|---|---|---|---|
+| 23 Nov 2026 | OpenPrescribing's API started returning a Cloudflare `403 Forbidden` to scripted requests, even with a custom User-Agent. | It is only an outside cross-check, so `scripts/check_apis.py` now warns instead of failing. Logged it as a GitHub issue. | Workaround in place. Moving the cross-check to NHSBSA Prescription Cost Analysis |
+| 23 Nov 2026 | NHSBSA's "run SQL on the data" endpoint returned `400` for the newest month. | Not needed: the pipeline downloads the monthly file instead. The check script reports it and carries on. | No action needed |
