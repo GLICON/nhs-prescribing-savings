@@ -1,6 +1,15 @@
 # NHS Prescribing Variation & Savings Engine
 
 ![CI](https://github.com/GLICON/nhs-prescribing-savings/actions/workflows/ci.yml/badge.svg)
+![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)
+![SQL](https://img.shields.io/badge/SQL-Databricks-FF3621?logo=databricks&logoColor=white)
+![PySpark](https://img.shields.io/badge/PySpark-3.5-E25A1C?logo=apachespark&logoColor=white)
+![Delta Lake](https://img.shields.io/badge/Delta_Lake-3.2-00ADD4?logo=delta&logoColor=white)
+![Dagster](https://img.shields.io/badge/Dagster-orchestration-4F43DD)
+![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-CI%2FCD-2088FF?logo=githubactions&logoColor=white)
+![Power BI](https://img.shields.io/badge/Power_BI-dashboard-F2C811?logo=powerbi&logoColor=black)
+![Excel](https://img.shields.io/badge/Excel-workbook-217346?logo=microsoftexcel&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-green)
 
 A monthly data pipeline on **open NHS England prescribing data**. It finds where GP practices
 could save money by switching branded medicines to equivalent generics, and tests whether

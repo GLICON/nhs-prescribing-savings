@@ -1,0 +1,57 @@
+# -----------------------------------------------------------------------------
+# My project settings - all the links, names and numbers in ONE place.
+# If something changes (e.g. a new download link), I only edit this file.
+# Passwords and tokens do NOT go here - they go in .env (which is never uploaded).
+# -----------------------------------------------------------------------------
+
+project:
+  name: nhs-prescribing-savings
+  # The first month to process (YYYY-MM).
+  # One month of NHS prescribing data is about 18 million rows, so I start small.
+  start_month: "2025-09"
+
+sources:
+  # NHSBSA = the NHS organisation that publishes prescribing data
+  nhsbsa:
+    # The address of their API (CKAN is the website software they use)
+    ckan_base_url: "https://opendata.nhsbsa.net/api/3/action"
+    # The name of the dataset I want
+    epd_dataset_id: "english-prescribing-dataset-epd-with-snomed-code"
+    # Each month's file is called EPD_SNOMED_ + the month, e.g. EPD_SNOMED_202509
+    resource_prefix: "EPD_SNOMED_"
+
+  # OpenPrescribing = a trusted website with the same data. I use it to check my totals.
+  openprescribing:
+    base_url: "https://openprescribing.net/api/1.0"
+    # The drug I compare (atorvastatin - very common, so a good test)
+    benchmark_bnf_code: "0212000B0"
+    # My total must be within 2% of theirs to pass
+    tolerance_pct: 2.0
+
+  # Patient numbers for each GP practice (from NHS England)
+  # These links change every month - copy the latest ones from:
+  # https://digital.nhs.uk/data-and-information/publications/statistical/patients-registered-at-a-gp-practice
+  nhs_digital:
+    practice_age_csv_url: "PASTE_LINK_TO gp-reg-pat-prac-quin-age.csv"
+    practice_lsoa_csv_url: "PASTE_LINK_TO gp-reg-pat-prac-lsoa-all.csv"
+
+  # Deprivation scores for every neighbourhood in England (IMD 2025, File 7)
+  # https://www.gov.uk/government/statistics/english-indices-of-deprivation-2025
+  imd:
+    file7_csv_url: "PASTE_LINK_TO File_7 CSV"
+
+# Where my tables and files live in Databricks
+databricks:
+  catalog: "workspace"          # the top-level folder (Free Edition calls it "workspace")
+  schema: "nhs_rx"              # my database inside it
+  volume: "landing"             # the folder where raw files are uploaded
+  job_name: "nhs-rx-lakehouse"  # the name of my Databricks job
+
+# Numbers used in the analysis
+analysis:
+  # Ignore practices with fewer than 1,000 patients (their rates jump around too much)
+  min_list_size: 1000
+  # Leave out slow-release (modified-release) medicines - brands are often chosen on purpose
+  exclude_modified_release: true
+  # Flag a practice if it prescribes 20% more than expected (1.2 = 120%)
+  oe_ratio_flag: 1.2
