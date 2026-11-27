@@ -1,12 +1,27 @@
 # Dependabot opens a pull request when a library I use has a new version
 # or a security fix. CI then checks the update before I merge it.
+# To keep it tidy: updates are grouped into ONE pull request per type each
+# month, and big "major" version jumps (e.g. Spark 3 -> 4) are skipped,
+# because they need planning and testing on purpose, not an automatic bump.
 version: 2
 updates:
   - package-ecosystem: pip # Python libraries in pyproject.toml
     directory: "/"
     schedule:
       interval: monthly
-  - package-ecosystem: github-actions # the actions used in ci.yml
+    groups:
+      python-libraries: # all Python updates together in one pull request
+        patterns: ["*"]
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+  - package-ecosystem: github-actions # the actions used in ci.yml and deploy.yml
     directory: "/"
     schedule:
       interval: monthly
+    groups:
+      github-actions: # all action updates together in one pull request
+        patterns: ["*"]
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
