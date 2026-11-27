@@ -18,7 +18,7 @@ dependencies = ["requests>=2.31", "pyyaml>=6.0", "pandas>=2.0", "statsmodels>=0.
 
 # Extra libraries, split into groups so I only install what I need
 [project.optional-dependencies]
-spark = ["pyspark==3.5.3", "delta-spark==3.2.1"]          # to run Spark on my laptop
+spark = ["pyspark==4.2.1", "delta-spark==3.2.1"]          # to run Spark on my laptop
 orchestration = ["dagster>=1.8", "dagster-webserver>=1.8", "databricks-sdk>=0.30", "python-dotenv>=1.0"]  # Dagster + Databricks
 reports = ["openpyxl>=3.1"]                                # to make the Excel file
 dev = ["pytest>=8", "ruff>=0.6", "pre-commit>=3.7", "build>=1.2"]  # testing and checking my code
