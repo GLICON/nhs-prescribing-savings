@@ -1,0 +1,21 @@
+# CI = Continuous Integration: GitHub checks every push and pull request.
+# A red cross on a pull request means "fix this before merging".
+name: CI
+
+# Run on every push to main and on every pull request
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest # a free Linux machine from GitHub
+    steps:
+      - uses: actions/checkout@v4 # download the code
+      - uses: actions/setup-python@v5 # install Python
+        with:
+          python-version: "3.11"
+      - run: pip install ruff
+      - run: ruff check . # look for mistakes in the code
+      - run: ruff format --check . # check the code is neatly formatted
