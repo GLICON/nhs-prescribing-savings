@@ -12,7 +12,7 @@ jobs:
   checks:
     runs-on: ubuntu-latest # a free Linux machine from GitHub
     steps:
-      - uses: actions/checkout@v4 # download the code
+      - uses: actions/checkout@v7 # download the code
       - uses: actions/setup-python@v5 # install Python
         with:
           python-version: "3.11"
