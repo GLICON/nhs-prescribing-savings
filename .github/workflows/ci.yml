@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest # a free Linux machine from GitHub
     steps:
       - uses: actions/checkout@v4 # download the code
-      - uses: actions/setup-python@v5 # install Python
+      - uses: actions/setup-python@v7 # install Python
         with:
           python-version: "3.11"
       - run: pip install ruff
