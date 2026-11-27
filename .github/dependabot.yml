@@ -1,0 +1,12 @@
+# Dependabot opens a pull request when a library I use has a new version
+# or a security fix. CI then checks the update before I merge it.
+version: 2
+updates:
+  - package-ecosystem: pip # Python libraries in pyproject.toml
+    directory: "/"
+    schedule:
+      interval: monthly
+  - package-ecosystem: github-actions # the actions used in ci.yml
+    directory: "/"
+    schedule:
+      interval: monthly
